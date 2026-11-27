@@ -90,6 +90,7 @@
         </div>
       </div>
       <a class="navitem" href="./icp-calculator.html">Your team</a>
+      <a class="navitem" href="./contact.html">Contact</a>
       <a class="navitem current" href="./login.html">Portal login</a>
       <a class="navitem" href="https://www.linkedin.com/in/nicholas-nick-freeman/">LinkedIn</a>
       <span id="glider"></span>
@@ -168,5 +169,26 @@
   what.querySelectorAll('.panel a').forEach(function(a){ a.addEventListener('click', function(){ what.classList.remove('open'); }); });
 })();
 </script>
+<style>
+  /* Mobile optimisation pass — 2026-11-27 */
+  html, body { overflow-x: hidden; }
+  img { max-width: 100%; }
+  @media (max-width: 720px) {
+    .topnav .inner { padding: 10px 14px; }
+    nav.main { margin-left: 0; width: 100%; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
+    nav.main .navitem { font-size: 15px; padding: 6px 1px; }
+    #glider { display: none; }
+    .panel { left: 0; right: auto; width: 94vw; max-width: 94vw; padding: 14px; }
+    .cta { max-width: 100%; text-align: center; }
+    footer { margin-top: 44px; }
+    .wrap { padding: 40px 18px 56px; }
+    .plaque { padding: 24px 18px 20px; margin-bottom: 32px; }
+    .plaque img { height: 84px; }
+    h1 { font-size: 34px; }
+    .lede { font-size: 18px; line-height: 1.6; }
+    .door { padding: 26px 22px 24px; }
+    .cta { padding: 13px 22px; font-size: 16px; }
+  }
+</style>
 </body>
 </html>
