@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICP Fit Calculator — EXO Enablement</title>
-<meta name="description" content="Score your SDR team against the EXO Enablement fit rubric: function fit, team reality, authority, timing signals and pain evidence. Out of 100, with a straight verdict.">
+<title>Tell me about your SDR team — EXO Enablement</title>
+<meta name="description" content="A short diagnostic about your SDR team: onboarding, coaching, timing and what's still missing. Answer nine questions and get a straight, human read-back — no score, no grade.">
 <style>
   :root { --bg:#1B0105; --burgundy:#5A0A13; --gold:#BFA25E; --white:#FFFFFF; --muted:#D8CFC8; }
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -22,107 +22,129 @@
   label { display:block; color: var(--muted); font-size: 16px; padding: 6px 10px; cursor: pointer; }
   label:hover { background: #2a0208; }
   input[type=radio] { accent-color: var(--gold); margin-right: 8px; }
-  button { margin-top: 28px; padding: 14px 28px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 17px; font-family: inherit; cursor: pointer; }
-  button:hover { background: var(--gold); color: var(--bg); }
+  input[type=text], input[type=email], textarea { width:100%; background:#2a0208; border:1px solid var(--burgundy); color:var(--white); padding:10px; font-family:inherit; font-size:16px; margin:6px 0 14px; }
+  button, .cta { display:inline-block; margin-top: 20px; padding: 14px 28px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 17px; font-family: inherit; cursor: pointer; text-decoration:none; }
+  button:hover, .cta:hover { background: var(--gold); color: var(--bg); }
   #result { display:none; border: 1px solid var(--gold); padding: 24px; margin-top: 32px; }
-  #result h2 { color: var(--gold); font-weight: normal; font-size: 26px; }
-  #score { font-size: 52px; color: var(--gold); }
-  #breakdown { margin-top: 12px; color: var(--muted); font-size: 16px; }
-  .cta { display:inline-block; margin-top: 18px; padding: 12px 24px; border: 1px solid var(--gold); color: var(--gold); text-decoration:none; }
-  .cta:hover { background: var(--gold); color: var(--bg); }
+  #result h2 { color: var(--gold); font-weight: normal; font-size: 26px; margin-bottom: 10px; }
+  #result p, #result li { color: var(--muted); font-size: 17px; }
+  #result ul { margin: 10px 0 6px 20px; }
+  #sendbox { display:none; margin-top: 18px; }
   footer { margin-top: 48px; color: var(--muted); font-size: 14px; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="brand"><a href="index.html">EXO Enablement</a></div>
-  <h1>Is your SDR team a fit for fractional enablement? <span>Score it straight.</span></h1>
-  <p class="lede">Nine questions, two scores — because fit and timing are not the same thing. <strong>Fit (out of 70):</strong> function, team reality and authority — could EXO actually help this team? <strong>Urgency (out of 30):</strong> timing signals and pain — is now the moment? No email required. No gloss on the result.</p>
+  <h1>Tell me about your SDR team. <span>I'll tell you what I'm hearing.</span></h1>
+  <p class="lede">Nine straight questions about your team — how it's built, how it's coached, what's changing. No score at the end, no grade. You get a human read-back: what sounds solid, what still sounds missing, and the topics worth talking about. If you want me to see your answers, there's a send button at the end — your call, not a trap.</p>
 
   <form id="calc">
     <fieldset>
-      <legend>Function fit — 30 points</legend>
+      <legend>The function</legend>
       <div class="q"><p>1. What does your outbound motion look like?</p>
-        <label><input type="radio" name="q1" value="15">A dedicated SDR team doing outbound</label>
-        <label><input type="radio" name="q1" value="10">SDRs split across inbound and outbound</label>
-        <label><input type="radio" name="q1" value="6" data-prehire="1">No SDRs yet — hiring our first is planned</label>
-        <label><input type="radio" name="q1" value="0" data-dq="1">No outbound planned at all</label>
+        <label><input type="radio" name="q1" value="15" data-label="A dedicated SDR team doing outbound">A dedicated SDR team doing outbound</label>
+        <label><input type="radio" name="q1" value="10" data-label="SDRs split across inbound and outbound">SDRs split across inbound and outbound</label>
+        <label><input type="radio" name="q1" value="6" data-prehire="1" data-label="No SDRs yet — hiring our first is planned">No SDRs yet — hiring our first is planned</label>
+        <label><input type="radio" name="q1" value="0" data-dq="1" data-label="No outbound planned at all">No outbound planned at all</label>
       </div>
       <div class="q"><p>2. Who owns the SDR function day to day?</p>
-        <label><input type="radio" name="q2" value="15">A dedicated SDR leader</label>
-        <label><input type="radio" name="q2" value="9">A sales leader who also carries other teams</label>
-        <label><input type="radio" name="q2" value="6">The founder / Head of Sales, alongside everything else</label>
-        <label><input type="radio" name="q2" value="0">Nobody clearly owns it</label>
+        <label><input type="radio" name="q2" value="15" data-label="A dedicated SDR leader">A dedicated SDR leader</label>
+        <label><input type="radio" name="q2" value="9" data-label="A sales leader who also carries other teams">A sales leader who also carries other teams</label>
+        <label><input type="radio" name="q2" value="6" data-label="The founder / Head of Sales, alongside everything else">The founder / Head of Sales, alongside everything else</label>
+        <label><input type="radio" name="q2" value="0" data-label="Nobody clearly owns it">Nobody clearly owns it</label>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>Team reality — 25 points</legend>
+      <legend>The team</legend>
       <div class="q"><p>3. How many SDRs are in the team today?</p>
-        <label><input type="radio" name="q3" value="15">5 or more</label>
-        <label><input type="radio" name="q3" value="11">3–4</label>
-        <label><input type="radio" name="q3" value="7">1–2</label>
-        <label><input type="radio" name="q3" value="4" data-prehire="1">None yet — pre-hire</label>
+        <label><input type="radio" name="q3" value="15" data-label="5 or more SDRs">5 or more</label>
+        <label><input type="radio" name="q3" value="11" data-label="3–4 SDRs">3–4</label>
+        <label><input type="radio" name="q3" value="7" data-label="1–2 SDRs">1–2</label>
+        <label><input type="radio" name="q3" value="4" data-prehire="1" data-label="None yet — pre-hire">None yet — pre-hire</label>
       </div>
       <div class="q"><p>4. Is there a manager in place for the team?</p>
-        <label><input type="radio" name="q4" value="10">Yes — a dedicated SDR manager</label>
-        <label><input type="radio" name="q4" value="6">Partly — SDRs report to a sales leader or founder who covers management alongside other work</label>
-        <label><input type="radio" name="q4" value="2">No manager in place yet</label>
+        <label><input type="radio" name="q4" value="10" data-label="A dedicated SDR manager is in place">Yes — a dedicated SDR manager</label>
+        <label><input type="radio" name="q4" value="6" data-label="Management is covered by a sales leader or founder alongside other work">Partly — SDRs report to a sales leader or founder who covers management alongside other work</label>
+        <label><input type="radio" name="q4" value="2" data-label="No manager in place yet">No manager in place yet</label>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>Authority — 15 points</legend>
-      <div class="q"><p>5. If this scored well, who are you in the decision?</p>
-        <label><input type="radio" name="q5" value="15">I own the budget and can sign this off</label>
-        <label><input type="radio" name="q5" value="9">I influence it — a VP / CRO signs off</label>
-        <label><input type="radio" name="q5" value="3">I can raise it, but I have little influence</label>
+      <legend>The decision</legend>
+      <div class="q"><p>5. If help made sense, who are you in the decision?</p>
+        <label><input type="radio" name="q5" value="15" data-label="I own the budget and can sign this off">I own the budget and can sign this off</label>
+        <label><input type="radio" name="q5" value="9" data-label="I influence it — a VP / CRO signs off">I influence it — a VP / CRO signs off</label>
+        <label><input type="radio" name="q5" value="3" data-label="I can raise it, but I have little influence">I can raise it, but I have little influence</label>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>Timing signals — 20 points</legend>
+      <legend>What's changing</legend>
       <div class="q"><p>6. Hiring in the next six months?</p>
-        <label><input type="radio" name="q6" value="10">Hiring 2+ SDRs</label>
-        <label><input type="radio" name="q6" value="7">Hiring 1 SDR</label>
-        <label><input type="radio" name="q6" value="5">Backfill only</label>
-        <label><input type="radio" name="q6" value="2">No hiring planned</label>
+        <label><input type="radio" name="q6" value="10" data-label="Hiring 2+ SDRs in the next six months">Hiring 2+ SDRs</label>
+        <label><input type="radio" name="q6" value="7" data-label="Hiring 1 SDR in the next six months">Hiring 1 SDR</label>
+        <label><input type="radio" name="q6" value="5" data-label="Backfill hiring only">Backfill only</label>
+        <label><input type="radio" name="q6" value="2" data-label="No hiring planned">No hiring planned</label>
       </div>
       <div class="q"><p>7. Any change event on the horizon?</p>
-        <label><input type="radio" name="q7" value="10">Post-M&amp;A integration, new sales leader, or new market</label>
-        <label><input type="radio" name="q7" value="6">A restructure or playbook change is being planned</label>
-        <label><input type="radio" name="q7" value="3">Steady state — no major change</label>
+        <label><input type="radio" name="q7" value="10" data-label="Change coming: post-M&A, new sales leader, or new market">Post-M&amp;A integration, new sales leader, or new market</label>
+        <label><input type="radio" name="q7" value="6" data-label="A restructure or playbook change is being planned">A restructure or playbook change is being planned</label>
+        <label><input type="radio" name="q7" value="3" data-label="Steady state — no major change">Steady state — no major change</label>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>Pain evidence — 10 points</legend>
+      <legend>The honest part</legend>
       <div class="q"><p>8. Ramp and attrition — how real is the pain?</p>
-        <label><input type="radio" name="q8" value="5">Documented: slow ramp, early attrition, we have the numbers</label>
-        <label><input type="radio" name="q8" value="3">Anecdotal: we feel it, we haven't measured it</label>
-        <label><input type="radio" name="q8" value="0">Ramp is fine and reps are staying</label>
+        <label><input type="radio" name="q8" value="5" data-label="Ramp/attrition pain is documented — we have the numbers">Documented: slow ramp, early attrition, we have the numbers</label>
+        <label><input type="radio" name="q8" value="3" data-label="Ramp/attrition pain is felt but not measured">Anecdotal: we feel it, we haven't measured it</label>
+        <label><input type="radio" name="q8" value="0" data-label="Ramp is fine and reps are staying">Ramp is fine and reps are staying</label>
       </div>
       <div class="q"><p>9. How consistent is coaching across the team?</p>
-        <label><input type="radio" name="q9" value="5">It varies by manager — no shared scorecard or framework</label>
-        <label><input type="radio" name="q9" value="3">Some structure, applied inconsistently</label>
-        <label><input type="radio" name="q9" value="1">A consistent framework every manager actually uses</label>
+        <label><input type="radio" name="q9" value="5" data-label="Coaching varies by manager — no shared scorecard or framework">It varies by manager — no shared scorecard or framework</label>
+        <label><input type="radio" name="q9" value="3" data-label="Some coaching structure, applied inconsistently">Some structure, applied inconsistently</label>
+        <label><input type="radio" name="q9" value="1" data-label="A consistent coaching framework every manager uses">A consistent framework every manager actually uses</label>
       </div>
     </fieldset>
 
-    <button type="submit">Score my team</button>
+    <fieldset>
+      <legend>Who's telling me this? (only needed if you send it)</legend>
+      <label for="f-name">Your name</label>
+      <input type="text" id="f-name" autocomplete="name">
+      <label for="f-company">Company</label>
+      <input type="text" id="f-company" autocomplete="organization">
+      <label for="f-email">Work email</label>
+      <input type="email" id="f-email" autocomplete="email">
+      <label for="f-note">Anything else you want me to know? (optional)</label>
+      <textarea id="f-note" rows="3"></textarea>
+    </fieldset>
+
+    <button type="submit">Tell me what you're hearing</button>
   </form>
 
   <div id="result">
-    <div id="score"></div>
-    <h2 id="verdict"></h2>
-    <p id="advice" style="color:var(--muted); margin-top:10px;"></p>
-    <div id="breakdown"></div>
-    <a class="cta" href="https://www.linkedin.com/in/nicholas-nick-freeman/">Talk to Nick on LinkedIn</a>
+    <h2 id="headline"></h2>
+    <p id="hearing"></p>
+    <p id="missing" style="margin-top:12px;"></p>
+    <p style="margin-top:14px; color:var(--white);">Topics worth a conversation:</p>
+    <ul id="topics"></ul>
+    <p style="margin-top:12px;">That's the honest read. If you want to talk any of it through, I'm a person, not a funnel — message me and we'll talk properly.</p>
+    <div id="sendbox">
+      <p style="color:var(--white);">Want me to actually see your answers?</p>
+      <p>Copy your summary and send it to me on LinkedIn — I'll read it myself and reply like a human.</p>
+      <button type="button" id="copyBtn">Copy my summary</button>
+      <a class="cta" href="https://www.linkedin.com/in/nicholas-nick-freeman/" target="_blank" rel="noopener">Send it to Nick on LinkedIn</a>
+      <p id="copied" style="display:none; margin-top:8px;">Copied. Paste it into the LinkedIn message.</p>
+    </div>
   </div>
 
-  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. Scoring based on the EXO ICP Rubric — public calculator v2 (fit and urgency scored separately). Your answers never leave your browser — nothing is collected or sent anywhere.</footer>
+  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. Nothing is collected or sent anywhere unless you choose to send Nick your summary yourself.</footer>
 </div>
 <script>
+  // Internal only: Nick's qualification scoring. Never displayed to the visitor.
+  var SEND_ENDPOINT = ''; // form-inbox endpoint to be added when Nick confirms the destination inbox
   var cats = [
     {name:'Function fit', max:30, qs:['q1','q2'], axis:'fit'},
     {name:'Team reality', max:25, qs:['q3','q4'], axis:'fit'},
@@ -130,48 +152,84 @@
     {name:'Timing signals', max:20, qs:['q6','q7'], axis:'urgency'},
     {name:'Pain evidence', max:10, qs:['q8','q9'], axis:'urgency'}
   ];
+  var val = {};
+  function selected(q) { return document.querySelector('input[name="' + q + '"]:checked'); }
+
   document.getElementById('calc').addEventListener('submit', function(e) {
     e.preventDefault();
-    var fit = 0, urgency = 0, parts = [], dq = false, missing = [], prehire = false;
+    var fit = 0, urgency = 0, dq = false, missingAll = [], prehire = false, answers = [];
     cats.forEach(function(c) {
       var s = 0;
       c.qs.forEach(function(q) {
-        var sel = document.querySelector('input[name="' + q + '"]:checked');
-        if (!sel) { missing.push(q); return; }
-        s += parseInt(sel.value, 10);
+        var sel = selected(q);
+        if (!sel) { missingAll.push(q); return; }
+        var v = parseInt(sel.value, 10);
+        val[q] = v;
+        s += v;
+        answers.push(sel.getAttribute('data-label'));
         if (sel.getAttribute('data-dq')) dq = true;
-        if ((q === 'q1' || q === 'q3') && sel.getAttribute('data-prehire')) prehire = true;
+        if (sel.getAttribute('data-prehire')) prehire = true;
       });
       if (c.axis === 'fit') fit += s; else urgency += s;
-      parts.push(c.name + ': ' + s + '/' + c.max);
     });
-    if (missing.length) { alert('Answer every question — a partial score would be a false one.'); return; }
-    var verdict, advice;
+    if (missingAll.length) { alert('Answer every question — a partial picture would get a false read-back.'); return; }
+
+    var headline, hearing, missingTxt, topics = [];
     if (dq) {
-      verdict = 'Not a fit — and that is a straight answer, not a sales tactic.';
-      advice = 'EXO is built around an outbound SDR function. With no outbound planned, fractional SDR enablement is the wrong spend. If that changes, score yourself again.';
-    } else if (prehire && fit < 50) {
-      verdict = 'A different fit — first-SDR readiness.';
-      advice = 'You are pre-hire, so a full enablement engagement is the wrong product — but getting ready to hire your first SDR properly is exactly where EXO starts with early-stage teams: role, process, and the experience that rep walks into on day one.';
-    } else if (fit >= 50 && urgency >= 15) {
-      verdict = 'Good fit — and now is the time.';
-      advice = 'The function, the team and the decision-maker are in place, and the timing signals say this pays back now, not someday. This is the profile EXO is built for. A conversation is worth both our time.';
-    } else if (fit >= 50) {
-      verdict = 'Good fit — timing is the only question.';
-      advice = 'Strip out timing and this team fits. Nothing structural is missing — there is just no burning platform right now. That argues for a conversation and a smaller first step, not for waiting until a hiring round lands on a broken onboarding.';
-    } else if (fit >= 35) {
-      verdict = 'Emerging fit — building, not there yet.';
-      advice = 'The need is forming but something structural is missing — usually team scale, a manager in place, or a decision-maker in the room. Fix the lowest-scoring fit factor first, or talk it through.';
+      headline = 'Straight answer first: this probably isn\u2019t for you yet.';
+      hearing = 'You\u2019ve said there\u2019s no outbound planned — and everything EXO does is built around an outbound SDR function. Selling you enablement now would be selling you something you can\u2019t use, and I\u2019m not going to do that.';
+      missingTxt = 'What\u2019s still missing isn\u2019t coaching or onboarding. It\u2019s the function itself.';
+      topics = ['What to put in place before a first outbound hire ever starts', 'What a first SDR\u2019s day one, week one and month three should actually look like'];
+    } else if (prehire) {
+      headline = 'The need is real — and you\u2019re at the start of it.';
+      hearing = 'You\u2019re about to hire into a function that doesn\u2019t exist yet. That\u2019s not a weakness in your answers; it\u2019s the most honest place a team can be, and it\u2019s where the most expensive mistakes get made — usually before the rep even starts.';
+      missingTxt = 'What\u2019s still missing is everything around that first hire: the role done properly, the process they\u2019ll run, and the experience they\u2019ll walk into on day one.';
+      topics = ['First-SDR readiness: role, process and manager cover, set up before the hire', 'Building day one so the first rep ramps on craft, not chaos'];
     } else {
-      verdict = 'Not yet.';
-      advice = 'On fit alone, an enablement engagement now would be selling you something you cannot use yet. Build the function first — and if you are heading toward your first SDR hire, the readiness route above is the honest starting point.';
+      headline = 'The need is real.';
+      hearing = 'You\u2019ve got a real function, a real team, and someone in the room who can actually make a decision. That\u2019s more than most teams who land here can say.';
+      var gaps = [];
+      if (val.q9 >= 3) { gaps.push('coaching that doesn\u2019t depend on which manager a rep happens to get'); topics.push('A shared call scorecard, so coaching stops varying by manager'); }
+      if (val.q8 >= 3) { gaps.push('a ramp you can actually see — where new reps stall, and why some leave early'); topics.push('Ramp and early attrition: measuring where reps actually stall'); }
+      if (val.q4 <= 6) { gaps.push('a manager with the space to actually manage'); topics.push('Manager cover and coaching time: what good looks like when the manager is stretched'); }
+      if (val.q6 >= 7) { gaps.push('an onboarding that can take the hiring you\u2019ve got coming without breaking'); topics.push('Your next hires\u2019 first 30-60-90 — and what \u201cgood\u201d looks like at each stage'); }
+      if (val.q7 >= 6) { gaps.push('one way of working while everything around the team changes'); topics.push('Keeping one playbook while the team goes through change'); }
+      if (!gaps.length) { gaps.push('the next layer — you\u2019ve got the basics in place, so the gains now are in craft, not structure'); topics.push('Craft over volume: where experienced teams find the next level'); }
+      if (topics.length > 3) topics = topics.slice(0, 3);
+      missingTxt = 'What\u2019s still missing, from what you\u2019ve said: ' + gaps.join('; ') + '.';
+      if (urgency < 15) missingTxt += ' There\u2019s no burning platform in your answers, and that\u2019s fine — it just means the conversation is about getting ahead of this, not firefighting it.';
     }
-    document.getElementById('score').textContent = 'Fit ' + fit + ' / 70  ·  Urgency ' + urgency + ' / 30';
-    document.getElementById('verdict').textContent = verdict;
-    document.getElementById('advice').textContent = advice;
-    document.getElementById('breakdown').textContent = parts.join('  ·  ');
+
+    document.getElementById('headline').textContent = headline;
+    document.getElementById('hearing').textContent = hearing;
+    document.getElementById('missing').textContent = missingTxt;
+    var ul = document.getElementById('topics');
+    ul.innerHTML = '';
+    topics.forEach(function(t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+
+    var name = document.getElementById('f-name').value.trim();
+    var company = document.getElementById('f-company').value.trim();
+    var email = document.getElementById('f-email').value.trim();
+    var note = document.getElementById('f-note').value.trim();
+    var summary = 'EXO team diagnostic\n'
+      + (name ? 'Name: ' + name + '\n' : '')
+      + (company ? 'Company: ' + company + '\n' : '')
+      + (email ? 'Email: ' + email + '\n' : '')
+      + 'Answers: ' + answers.join(' | ') + '\n'
+      + (note ? 'Note: ' + note + '\n' : '');
+    // Nick's internal score travels only inside the payload Nick receives, never on screen.
+    var payload = summary + '[Internal — Fit ' + fit + '/70, Urgency ' + urgency + '/30]';
+
+    if (SEND_ENDPOINT) {
+      fetch(SEND_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'}, body: JSON.stringify({summary: payload})}).catch(function(){});
+    }
+    document.getElementById('copyBtn').onclick = function() {
+      var text = summary;
+      if (navigator.clipboard) { navigator.clipboard.writeText(text).then(function(){ document.getElementById('copied').style.display = 'block'; }); }
+    };
     var r = document.getElementById('result');
     r.style.display = 'block';
+    document.getElementById('sendbox').style.display = 'block';
     r.scrollIntoView({behavior:'smooth'});
   });
 </script>
