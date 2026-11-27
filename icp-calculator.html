@@ -219,8 +219,20 @@
       + (email ? 'Email: ' + email + '\n' : '')
       + 'Answers: ' + answers.join(' | ') + '\n'
       + (note ? 'Note: ' + note + '\n' : '');
-    // Nick's internal score travels only inside the payload Nick receives, never on screen.
-    var payload = summary + '[Internal — Fit ' + fit + '/70, Urgency ' + urgency + '/30]';
+    // What Nick receives: everything they submitted, the exact message we
+    // showed them, and his internal score. None of the internal parts are
+    // ever shown on screen or included in the visitor's copied summary.
+    var qTexts = ['1. Outbound motion', '2. Who owns the SDR function', '3. Team size', '4. Manager in place', '5. Their authority', '6. Hiring next 6 months', '7. Change event', '8. Ramp / attrition pain', '9. Coaching consistency'];
+    var answersBlock = answers.map(function(a, i) { return qTexts[i] + ': ' + a; }).join('\n');
+    var shownMessage = headline + '\n' + hearing + '\n' + missingTxt + '\nTopics worth a conversation:\n- ' + topics.join('\n- ');
+    var payload = 'EXO team diagnostic — new submission\n'
+      + (name ? 'Name: ' + name + '\n' : '')
+      + (company ? 'Company: ' + company + '\n' : '')
+      + (email ? 'Email: ' + email + '\n' : '')
+      + (note ? 'Their note: ' + note + '\n' : '')
+      + '\n--- EVERYTHING THEY SUBMITTED ---\n' + answersBlock
+      + '\n\n--- THE MESSAGE WE SHOWED THEM ---\n' + shownMessage
+      + '\n\n[Internal — Fit ' + fit + '/70, Urgency ' + urgency + '/30]';
 
     document.getElementById('sendBtn').onclick = function() {
       var btn = this, status = document.getElementById('sendStatus');
