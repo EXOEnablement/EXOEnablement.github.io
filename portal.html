@@ -89,6 +89,7 @@
         </div>
       </div>
       <a class="navitem" href="./icp-calculator.html">Your team</a>
+      <a class="navitem" href="./contact.html">Contact</a>
       <a class="navitem" href="./login.html">Portal login</a>
       <a class="navitem" href="https://www.linkedin.com/in/nicholas-nick-freeman/">LinkedIn</a>
       <span id="glider"></span>
@@ -216,7 +217,7 @@
     </div>
   </section>
 
-  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK · EXO Portal prototype v1 · <a href="index.html">Back to the EXO site</a></footer>
+  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK · EXO Portal prototype v1 · <a href="index.html">Back to the EXO site</a><br><a href="https://www.linkedin.com/company/exo-enablement/" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="vertical-align:-3px; margin-right:6px;"><rect x="1" y="1" width="22" height="22" rx="4" fill="#FFFFFF"/><text x="12" y="17.5" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12.5" font-weight="bold" fill="#1B0105">in</text></svg>Follow EXO Enablement on LinkedIn</a></footer>
 </div>
 
 <script>
@@ -418,5 +419,24 @@ render();
   what.querySelectorAll('.panel a').forEach(function(a){ a.addEventListener('click', function(){ what.classList.remove('open'); }); });
 })();
 </script>
+<style>
+  /* Mobile optimisation pass — 2026-11-27 */
+  html, body { overflow-x: hidden; }
+  img { max-width: 100%; }
+  @media (max-width: 720px) {
+    .topnav .inner { padding: 10px 14px; }
+    nav.main { margin-left: 0; width: 100%; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
+    nav.main .navitem { font-size: 15px; padding: 6px 1px; }
+    #glider { display: none; }
+    .panel { left: 0; right: auto; width: 94vw; max-width: 94vw; padding: 14px; }
+    .cta { max-width: 100%; text-align: center; }
+    footer { margin-top: 44px; }
+    .wrap { padding: 28px 14px 48px; }
+    h1 { font-size: 25px; }
+    .grid .card { flex: 1 1 100%; }
+    .wrap nav button { min-height: 40px; }
+    input, select, textarea { font-size: 16px; }
+  }
+</style>
 </body>
 </html>
