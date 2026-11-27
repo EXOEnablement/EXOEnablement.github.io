@@ -37,7 +37,7 @@
 <div class="wrap">
   <div class="brand"><a href="index.html">EXO Enablement</a></div>
   <h1>Tell me about your SDR team. <span>I'll tell you what I'm hearing.</span></h1>
-  <p class="lede">Nine straight questions about your team — how it's built, how it's coached, what's changing. No score at the end, no grade. You get a human read-back: what sounds solid, what still sounds missing, and the topics worth talking about. If you want me to see your answers, there's a copy button at the end so you can send them to me yourself — your call, not a trap.</p>
+  <p class="lede">Nine straight questions about your team — how it's built, how it's coached, what's changing. No score at the end, no grade. You get a human read-back: what sounds solid, what still sounds missing, and the topics worth talking about. Your answers come to me, you get a straight read-back, and a copy of everything to keep or send on.</p>
 
   <form id="calc">
     <fieldset>
@@ -132,19 +132,19 @@
     <ul id="topics"></ul>
     <p style="margin-top:12px;">That's the honest read. If you want to talk any of it through, I'm a person, not a funnel — message me and we'll talk properly.</p>
     <div id="sendbox">
-      <p style="color:var(--white);">Want me to actually see your answers?</p>
-      <p>Copy your summary and send it to me on LinkedIn — I'll read it myself and reply like a human. Or just reach me there directly. Nothing leaves this page unless you send it.</p>
       <button type="button" id="copyBtn">Copy my summary</button>
-      <a class="cta" href="https://www.linkedin.com/in/nicholas-nick-freeman/" target="_blank" rel="noopener">Reach me on LinkedIn</a>
-      <p id="copied" style="display:none; margin-top:8px;">Copied. Paste it into the LinkedIn message.</p>
+      <a class="cta" href="https://www.linkedin.com/in/nicholas-nick-freeman/" target="_blank" rel="noopener">Or reach me on LinkedIn</a>
+      <p id="copied" style="display:none; margin-top:8px;">Copied — your answers and this read-back, ready to paste wherever suits you.</p>
     </div>
   </div>
 
-  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. Nothing is collected or sent anywhere — your answers stay on this page unless you copy them and send them yourself.</footer>
+  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. When you submit, your answers are sent to Nick at EXO Enablement — he reads them himself and replies like a human. Nothing is sold or shared anywhere else.</footer>
 </div>
 <script>
-  // Internal only: used to tailor the human message. Never displayed to the visitor,
-  // never sent anywhere — the visitor chooses whether to share their summary.
+  // Submissions go to Nick's inbox automatically on submit. His internal
+  // score travels only in that payload — never displayed, never in the
+  // visitor's own copy.
+  var SEND_ENDPOINT = 'https://formsubmit.co/ajax/nick.exo@mail.com';
   var cats = [
     {name:'Function fit', max:30, qs:['q1','q2'], axis:'fit'},
     {name:'Team reality', max:25, qs:['q3','q4'], axis:'fit'},
@@ -211,12 +211,31 @@
     var company = document.getElementById('f-company').value.trim();
     var email = document.getElementById('f-email').value.trim();
     var note = document.getElementById('f-note').value.trim();
-    var summary = 'EXO team diagnostic\n'
+    var qTexts = ['1. Outbound motion', '2. Who owns the SDR function', '3. Team size', '4. Manager in place', '5. Their authority', '6. Hiring next 6 months', '7. Change event', '8. Ramp / attrition pain', '9. Coaching consistency'];
+    var answersBlock = answers.map(function(a, i) { return qTexts[i] + ': ' + a; }).join('\n');
+    var shownMessage = headline + '\n' + hearing + '\n' + missingTxt + '\nTopics worth a conversation:\n- ' + topics.join('\n- ');
+    // The visitor's own copy: everything they submitted + the message they were shown.
+    var summary = 'My SDR team — EXO diagnostic\n'
       + (name ? 'Name: ' + name + '\n' : '')
       + (company ? 'Company: ' + company + '\n' : '')
       + (email ? 'Email: ' + email + '\n' : '')
-      + 'Answers: ' + answers.join(' | ') + '\n'
-      + (note ? 'Note: ' + note + '\n' : '');
+      + (note ? 'Note: ' + note + '\n' : '')
+      + '\n--- My answers ---\n' + answersBlock
+      + '\n\n--- What Nick said back ---\n' + shownMessage + '\n';
+    // Nick's payload: the same, plus his internal score as its own field.
+    var payload = 'EXO team diagnostic — new submission\n'
+      + (name ? 'Name: ' + name + '\n' : '')
+      + (company ? 'Company: ' + company + '\n' : '')
+      + (email ? 'Email: ' + email + '\n' : '')
+      + (note ? 'Their note: ' + note + '\n' : '')
+      + '\n--- EVERYTHING THEY SUBMITTED ---\n' + answersBlock
+      + '\n\n--- THE MESSAGE WE SHOWED THEM ---\n' + shownMessage
+      + '\n\n[Internal — Fit ' + fit + '/70, Urgency ' + urgency + '/30]';
+    fetch(SEND_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+      body: JSON.stringify({name: name || 'Website visitor', company: company, email: email,
+        message: payload, their_answers: answersBlock, message_we_showed_them: shownMessage,
+        internal_score: 'Fit ' + fit + '/70, Urgency ' + urgency + '/30',
+        _subject: 'EXO team diagnostic — new submission', _template: 'table'})}).catch(function(){});
     document.getElementById('copyBtn').onclick = function() {
       var text = summary;
       if (navigator.clipboard) { navigator.clipboard.writeText(text).then(function(){ document.getElementById('copied').style.display = 'block'; }); }
