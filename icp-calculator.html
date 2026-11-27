@@ -37,7 +37,7 @@
 <div class="wrap">
   <div class="brand"><a href="index.html">EXO Enablement</a></div>
   <h1>Is your SDR team a fit for fractional enablement? <span>Score it straight.</span></h1>
-  <p class="lede">Nine questions, scored out of 100 on the same five factors EXO uses to qualify every engagement: function fit (30), team reality (25), authority (15), timing signals (20) and pain evidence (10). No email required. No gloss on the result.</p>
+  <p class="lede">Nine questions, two scores — because fit and timing are not the same thing. <strong>Fit (out of 70):</strong> function, team reality and authority — could EXO actually help this team? <strong>Urgency (out of 30):</strong> timing signals and pain — is now the moment? No email required. No gloss on the result.</p>
 
   <form id="calc">
     <fieldset>
@@ -45,7 +45,7 @@
       <div class="q"><p>1. What does your outbound motion look like?</p>
         <label><input type="radio" name="q1" value="15">A dedicated SDR team doing outbound</label>
         <label><input type="radio" name="q1" value="10">SDRs split across inbound and outbound</label>
-        <label><input type="radio" name="q1" value="6">No SDRs yet — hiring our first is planned</label>
+        <label><input type="radio" name="q1" value="6" data-prehire="1">No SDRs yet — hiring our first is planned</label>
         <label><input type="radio" name="q1" value="0" data-dq="1">No outbound planned at all</label>
       </div>
       <div class="q"><p>2. Who owns the SDR function day to day?</p>
@@ -62,12 +62,12 @@
         <label><input type="radio" name="q3" value="15">5 or more</label>
         <label><input type="radio" name="q3" value="11">3–4</label>
         <label><input type="radio" name="q3" value="7">1–2</label>
-        <label><input type="radio" name="q3" value="4">None yet — pre-hire</label>
+        <label><input type="radio" name="q3" value="4" data-prehire="1">None yet — pre-hire</label>
       </div>
-      <div class="q"><p>4. How much real time does the SDR manager have to coach?</p>
-        <label><input type="radio" name="q4" value="10">Protected coaching time every week</label>
-        <label><input type="radio" name="q4" value="5">Some, but meetings and reporting eat most of it</label>
-        <label><input type="radio" name="q4" value="2">Almost none — the manager is also carrying a number</label>
+      <div class="q"><p>4. Is there a manager in place for the team?</p>
+        <label><input type="radio" name="q4" value="10">Yes — a dedicated SDR manager</label>
+        <label><input type="radio" name="q4" value="6">Partly — SDRs report to a sales leader or founder who covers management alongside other work</label>
+        <label><input type="radio" name="q4" value="2">No manager in place yet</label>
       </div>
     </fieldset>
 
@@ -120,19 +120,19 @@
     <a class="cta" href="https://www.linkedin.com/in/nicholas-nick-freeman/">Talk to Nick on LinkedIn</a>
   </div>
 
-  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. Scoring based on the EXO ICP Rubric v1. Your answers never leave your browser — nothing is collected or sent anywhere.</footer>
+  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. Scoring based on the EXO ICP Rubric — public calculator v2 (fit and urgency scored separately). Your answers never leave your browser — nothing is collected or sent anywhere.</footer>
 </div>
 <script>
   var cats = [
-    {name:'Function fit', max:30, qs:['q1','q2']},
-    {name:'Team reality', max:25, qs:['q3','q4']},
-    {name:'Authority', max:15, qs:['q5']},
-    {name:'Timing signals', max:20, qs:['q6','q7']},
-    {name:'Pain evidence', max:10, qs:['q8','q9']}
+    {name:'Function fit', max:30, qs:['q1','q2'], axis:'fit'},
+    {name:'Team reality', max:25, qs:['q3','q4'], axis:'fit'},
+    {name:'Authority', max:15, qs:['q5'], axis:'fit'},
+    {name:'Timing signals', max:20, qs:['q6','q7'], axis:'urgency'},
+    {name:'Pain evidence', max:10, qs:['q8','q9'], axis:'urgency'}
   ];
   document.getElementById('calc').addEventListener('submit', function(e) {
     e.preventDefault();
-    var total = 0, parts = [], dq = false, missing = [];
+    var fit = 0, urgency = 0, parts = [], dq = false, missing = [], prehire = false;
     cats.forEach(function(c) {
       var s = 0;
       c.qs.forEach(function(q) {
@@ -140,8 +140,9 @@
         if (!sel) { missing.push(q); return; }
         s += parseInt(sel.value, 10);
         if (sel.getAttribute('data-dq')) dq = true;
+        if ((q === 'q1' || q === 'q3') && sel.getAttribute('data-prehire')) prehire = true;
       });
-      total += s;
+      if (c.axis === 'fit') fit += s; else urgency += s;
       parts.push(c.name + ': ' + s + '/' + c.max);
     });
     if (missing.length) { alert('Answer every question — a partial score would be a false one.'); return; }
@@ -149,17 +150,23 @@
     if (dq) {
       verdict = 'Not a fit — and that is a straight answer, not a sales tactic.';
       advice = 'EXO is built around an outbound SDR function. With no outbound planned, fractional SDR enablement is the wrong spend. If that changes, score yourself again.';
-    } else if (total >= 70) {
-      verdict = 'Strong fit — now.';
-      advice = 'Your team has the function, the scale and the timing for fractional enablement to pay back fast. This is exactly the profile EXO is built for. A conversation now is worth both our time.';
-    } else if (total >= 50) {
+    } else if (prehire && fit < 50) {
+      verdict = 'A different fit — first-SDR readiness.';
+      advice = 'You are pre-hire, so a full enablement engagement is the wrong product — but getting ready to hire your first SDR properly is exactly where EXO starts with early-stage teams: role, process, and the experience that rep walks into on day one.';
+    } else if (fit >= 50 && urgency >= 15) {
+      verdict = 'Good fit — and now is the time.';
+      advice = 'The function, the team and the decision-maker are in place, and the timing signals say this pays back now, not someday. This is the profile EXO is built for. A conversation is worth both our time.';
+    } else if (fit >= 50) {
+      verdict = 'Good fit — timing is the only question.';
+      advice = 'Strip out timing and this team fits. Nothing structural is missing — there is just no burning platform right now. That argues for a conversation and a smaller first step, not for waiting until a hiring round lands on a broken onboarding.';
+    } else if (fit >= 35) {
       verdict = 'Emerging fit — building, not there yet.';
-      advice = 'The need is forming but something is missing — usually team scale, timing, or a decision-maker in the room. Fix the lowest-scoring factor first, or talk it through: sometimes the honest answer is a smaller first step.';
+      advice = 'The need is forming but something structural is missing — usually team scale, a manager in place, or a decision-maker in the room. Fix the lowest-scoring fit factor first, or talk it through.';
     } else {
       verdict = 'Not yet.';
-      advice = 'Scoring under 50 usually means pre-hire or very early stage. That is not a dead end — EXO also helps businesses get ready to hire their first SDR properly. But a full enablement engagement now would be selling you something you cannot use yet.';
+      advice = 'On fit alone, an enablement engagement now would be selling you something you cannot use yet. Build the function first — and if you are heading toward your first SDR hire, the readiness route above is the honest starting point.';
     }
-    document.getElementById('score').textContent = total + ' / 100';
+    document.getElementById('score').textContent = 'Fit ' + fit + ' / 70  ·  Urgency ' + urgency + ' / 30';
     document.getElementById('verdict').textContent = verdict;
     document.getElementById('advice').textContent = advice;
     document.getElementById('breakdown').textContent = parts.join('  ·  ');
