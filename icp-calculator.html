@@ -133,18 +133,20 @@
     <p style="margin-top:12px;">That's the honest read. If you want to talk any of it through, I'm a person, not a funnel — message me and we'll talk properly.</p>
     <div id="sendbox">
       <p style="color:var(--white);">Want me to actually see your answers?</p>
-      <p>Copy your summary and send it to me on LinkedIn — I'll read it myself and reply like a human.</p>
-      <button type="button" id="copyBtn">Copy my summary</button>
-      <a class="cta" href="https://www.linkedin.com/in/nicholas-nick-freeman/" target="_blank" rel="noopener">Send it to Nick on LinkedIn</a>
-      <p id="copied" style="display:none; margin-top:8px;">Copied. Paste it into the LinkedIn message.</p>
+      <p>Send them over — they land in my inbox, I'll read them myself and reply like a human. Nothing is sent unless you click that button.</p>
+      <button type="button" id="sendBtn">Send this to Nick</button>
+      <button type="button" id="copyBtn">Copy my summary instead</button>
+      <a class="cta" href="https://www.linkedin.com/in/nicholas-nick-freeman/" target="_blank" rel="noopener">Or reach me on LinkedIn</a>
+      <p id="sendStatus" style="display:none; margin-top:8px;"></p>
+      <p id="copied" style="display:none; margin-top:8px;">Copied. Paste it wherever suits you.</p>
     </div>
   </div>
 
-  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. Nothing is collected or sent anywhere unless you choose to send Nick your summary yourself.</footer>
+  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. Nothing is collected or sent anywhere unless you click "Send this to Nick" at the end.</footer>
 </div>
 <script>
   // Internal only: Nick's qualification scoring. Never displayed to the visitor.
-  var SEND_ENDPOINT = ''; // form-inbox endpoint to be added when Nick confirms the destination inbox
+  var SEND_ENDPOINT = 'https://formsubmit.co/ajax/nick.exo@mail.com';
   var cats = [
     {name:'Function fit', max:30, qs:['q1','q2'], axis:'fit'},
     {name:'Team reality', max:25, qs:['q3','q4'], axis:'fit'},
@@ -220,9 +222,15 @@
     // Nick's internal score travels only inside the payload Nick receives, never on screen.
     var payload = summary + '[Internal — Fit ' + fit + '/70, Urgency ' + urgency + '/30]';
 
-    if (SEND_ENDPOINT) {
-      fetch(SEND_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'}, body: JSON.stringify({summary: payload})}).catch(function(){});
-    }
+    document.getElementById('sendBtn').onclick = function() {
+      var btn = this, status = document.getElementById('sendStatus');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      fetch(SEND_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'},
+        body: JSON.stringify({name: name || 'Website visitor', company: company, email: email, message: payload, _subject: 'EXO team diagnostic — new submission', _template: 'table'})})
+        .then(function(r) { return r.json(); })
+        .then(function() { status.style.display = 'block'; status.textContent = 'Sent. It\u2019s in Nick\u2019s inbox now — he\u2019ll reply himself.'; btn.textContent = 'Sent'; })
+        .catch(function() { status.style.display = 'block'; status.textContent = 'That didn\u2019t send — copy your summary below and reach me on LinkedIn instead.'; btn.disabled = false; btn.textContent = 'Try sending again'; });
+    };
     document.getElementById('copyBtn').onclick = function() {
       var text = summary;
       if (navigator.clipboard) { navigator.clipboard.writeText(text).then(function(){ document.getElementById('copied').style.display = 'block'; }); }
