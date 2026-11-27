@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICP Fit Calculator — EXO Enablement</title>
+<meta name="description" content="Score your SDR team against the EXO Enablement fit rubric: function fit, team reality, authority, timing signals and pain evidence. Out of 100, with a straight verdict.">
+<style>
+  :root { --bg:#1B0105; --burgundy:#5A0A13; --gold:#BFA25E; --white:#FFFFFF; --muted:#D8CFC8; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--white); font-family: Georgia, 'Times New Roman', serif; line-height:1.6; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 64px; }
+  .brand { color:var(--gold); letter-spacing: 0.35em; font-size: 14px; text-transform: uppercase; }
+  .brand a { color:var(--gold); text-decoration:none; }
+  h1 { font-size: 38px; line-height:1.15; margin: 18px 0 14px; font-weight: normal; }
+  h1 span { color: var(--gold); }
+  .lede { font-size: 19px; color: var(--muted); max-width: 660px; }
+  fieldset { border: 1px solid var(--burgundy); padding: 20px; margin-top: 24px; }
+  legend { color: var(--gold); padding: 0 8px; font-size: 18px; }
+  .q { margin: 14px 0 20px; }
+  .q p { color: var(--white); font-size: 17px; margin-bottom: 8px; }
+  label { display:block; color: var(--muted); font-size: 16px; padding: 6px 10px; cursor: pointer; }
+  label:hover { background: #2a0208; }
+  input[type=radio] { accent-color: var(--gold); margin-right: 8px; }
+  button { margin-top: 28px; padding: 14px 28px; background: transparent; border: 1px solid var(--gold); color: var(--gold); font-size: 17px; font-family: inherit; cursor: pointer; }
+  button:hover { background: var(--gold); color: var(--bg); }
+  #result { display:none; border: 1px solid var(--gold); padding: 24px; margin-top: 32px; }
+  #result h2 { color: var(--gold); font-weight: normal; font-size: 26px; }
+  #score { font-size: 52px; color: var(--gold); }
+  #breakdown { margin-top: 12px; color: var(--muted); font-size: 16px; }
+  .cta { display:inline-block; margin-top: 18px; padding: 12px 24px; border: 1px solid var(--gold); color: var(--gold); text-decoration:none; }
+  .cta:hover { background: var(--gold); color: var(--bg); }
+  footer { margin-top: 48px; color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><a href="index.html">EXO Enablement</a></div>
+  <h1>Is your SDR team a fit for fractional enablement? <span>Score it straight.</span></h1>
+  <p class="lede">Nine questions, scored out of 100 on the same five factors EXO uses to qualify every engagement: function fit (30), team reality (25), authority (15), timing signals (20) and pain evidence (10). No email required. No gloss on the result.</p>
+
+  <form id="calc">
+    <fieldset>
+      <legend>Function fit — 30 points</legend>
+      <div class="q"><p>1. What does your outbound motion look like?</p>
+        <label><input type="radio" name="q1" value="15">A dedicated SDR team doing outbound</label>
+        <label><input type="radio" name="q1" value="10">SDRs split across inbound and outbound</label>
+        <label><input type="radio" name="q1" value="6">No SDRs yet — hiring our first is planned</label>
+        <label><input type="radio" name="q1" value="0" data-dq="1">No outbound planned at all</label>
+      </div>
+      <div class="q"><p>2. Who owns the SDR function day to day?</p>
+        <label><input type="radio" name="q2" value="15">A dedicated SDR leader</label>
+        <label><input type="radio" name="q2" value="9">A sales leader who also carries other teams</label>
+        <label><input type="radio" name="q2" value="6">The founder / Head of Sales, alongside everything else</label>
+        <label><input type="radio" name="q2" value="0">Nobody clearly owns it</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Team reality — 25 points</legend>
+      <div class="q"><p>3. How many SDRs are in the team today?</p>
+        <label><input type="radio" name="q3" value="15">5 or more</label>
+        <label><input type="radio" name="q3" value="11">3–4</label>
+        <label><input type="radio" name="q3" value="7">1–2</label>
+        <label><input type="radio" name="q3" value="4">None yet — pre-hire</label>
+      </div>
+      <div class="q"><p>4. How much real time does the SDR manager have to coach?</p>
+        <label><input type="radio" name="q4" value="10">Protected coaching time every week</label>
+        <label><input type="radio" name="q4" value="5">Some, but meetings and reporting eat most of it</label>
+        <label><input type="radio" name="q4" value="2">Almost none — the manager is also carrying a number</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Authority — 15 points</legend>
+      <div class="q"><p>5. If this scored well, who are you in the decision?</p>
+        <label><input type="radio" name="q5" value="15">I own the budget and can sign this off</label>
+        <label><input type="radio" name="q5" value="9">I influence it — a VP / CRO signs off</label>
+        <label><input type="radio" name="q5" value="3">I can raise it, but I have little influence</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Timing signals — 20 points</legend>
+      <div class="q"><p>6. Hiring in the next six months?</p>
+        <label><input type="radio" name="q6" value="10">Hiring 2+ SDRs</label>
+        <label><input type="radio" name="q6" value="7">Hiring 1 SDR</label>
+        <label><input type="radio" name="q6" value="5">Backfill only</label>
+        <label><input type="radio" name="q6" value="2">No hiring planned</label>
+      </div>
+      <div class="q"><p>7. Any change event on the horizon?</p>
+        <label><input type="radio" name="q7" value="10">Post-M&amp;A integration, new sales leader, or new market</label>
+        <label><input type="radio" name="q7" value="6">A restructure or playbook change is being planned</label>
+        <label><input type="radio" name="q7" value="3">Steady state — no major change</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Pain evidence — 10 points</legend>
+      <div class="q"><p>8. Ramp and attrition — how real is the pain?</p>
+        <label><input type="radio" name="q8" value="5">Documented: slow ramp, early attrition, we have the numbers</label>
+        <label><input type="radio" name="q8" value="3">Anecdotal: we feel it, we haven't measured it</label>
+        <label><input type="radio" name="q8" value="0">Ramp is fine and reps are staying</label>
+      </div>
+      <div class="q"><p>9. How consistent is coaching across the team?</p>
+        <label><input type="radio" name="q9" value="5">It varies by manager — no shared scorecard or framework</label>
+        <label><input type="radio" name="q9" value="3">Some structure, applied inconsistently</label>
+        <label><input type="radio" name="q9" value="1">A consistent framework every manager actually uses</label>
+      </div>
+    </fieldset>
+
+    <button type="submit">Score my team</button>
+  </form>
+
+  <div id="result">
+    <div id="score"></div>
+    <h2 id="verdict"></h2>
+    <p id="advice" style="color:var(--muted); margin-top:10px;"></p>
+    <div id="breakdown"></div>
+    <a class="cta" href="https://www.linkedin.com/in/nicholas-nick-freeman/">Talk to Nick on LinkedIn</a>
+  </div>
+
+  <footer>EXO Enablement — Nick Brennan-Freeman, Cambridge, UK. Scoring based on the EXO ICP Rubric v1. Your answers never leave your browser — nothing is collected or sent anywhere.</footer>
+</div>
+<script>
+  var cats = [
+    {name:'Function fit', max:30, qs:['q1','q2']},
+    {name:'Team reality', max:25, qs:['q3','q4']},
+    {name:'Authority', max:15, qs:['q5']},
+    {name:'Timing signals', max:20, qs:['q6','q7']},
+    {name:'Pain evidence', max:10, qs:['q8','q9']}
+  ];
+  document.getElementById('calc').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var total = 0, parts = [], dq = false, missing = [];
+    cats.forEach(function(c) {
+      var s = 0;
+      c.qs.forEach(function(q) {
+        var sel = document.querySelector('input[name="' + q + '"]:checked');
+        if (!sel) { missing.push(q); return; }
+        s += parseInt(sel.value, 10);
+        if (sel.getAttribute('data-dq')) dq = true;
+      });
+      total += s;
+      parts.push(c.name + ': ' + s + '/' + c.max);
+    });
+    if (missing.length) { alert('Answer every question — a partial score would be a false one.'); return; }
+    var verdict, advice;
+    if (dq) {
+      verdict = 'Not a fit — and that is a straight answer, not a sales tactic.';
+      advice = 'EXO is built around an outbound SDR function. With no outbound planned, fractional SDR enablement is the wrong spend. If that changes, score yourself again.';
+    } else if (total >= 70) {
+      verdict = 'Strong fit — now.';
+      advice = 'Your team has the function, the scale and the timing for fractional enablement to pay back fast. This is exactly the profile EXO is built for. A conversation now is worth both our time.';
+    } else if (total >= 50) {
+      verdict = 'Emerging fit — building, not there yet.';
+      advice = 'The need is forming but something is missing — usually team scale, timing, or a decision-maker in the room. Fix the lowest-scoring factor first, or talk it through: sometimes the honest answer is a smaller first step.';
+    } else {
+      verdict = 'Not yet.';
+      advice = 'Scoring under 50 usually means pre-hire or very early stage. That is not a dead end — EXO also helps businesses get ready to hire their first SDR properly. But a full enablement engagement now would be selling you something you cannot use yet.';
+    }
+    document.getElementById('score').textContent = total + ' / 100';
+    document.getElementById('verdict').textContent = verdict;
+    document.getElementById('advice').textContent = advice;
+    document.getElementById('breakdown').textContent = parts.join('  ·  ');
+    var r = document.getElementById('result');
+    r.style.display = 'block';
+    r.scrollIntoView({behavior:'smooth'});
+  });
+</script>
+</body>
+</html>
